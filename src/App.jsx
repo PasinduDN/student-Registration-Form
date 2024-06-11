@@ -1,105 +1,199 @@
-import './App.css'
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Unstable_Grid2';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
+import React, { useState } from 'react';
+import { TextField, Autocomplete, Button, MenuItem, Select, FormControl, InputLabel, Radio, RadioGroup, FormControlLabel, FormLabel, Grid, Box } from '@mui/material';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
 
-  const [age, setAge] = React.useState('');
+  const [value, setValue] = React.useState('female');
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setValue(event.target.value);
   };
 
+  const top100Films = [
+    { label: 'Male' },
+    { label: 'Female' },
+  ]
+
+  const [formData, setFormData] = useState({
+    registrationNumber: '',
+    name: '',
+    birthDay: '',
+    address: '',
+    telephone: '',
+    gender: top100Films[0].label,
+    nationality: ''
+  });
+
+  function ckeckFormData(){
+    if (
+      formData.registrationNumber &&
+      formData.name &&
+      formData.birthDay &&
+      formData.address &&
+      formData.telephone &&
+      formData.gender &&
+      formData.nationality
+    ) {
+      console.log("Form submitted:", formData);
+    } else {
+      alert("Please fill in all required fields.");
+    }
+  }
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // Check if all required fields are filled
+  //   if (
+  //     formData.registrationNumber &&
+  //     formData.name &&
+  //     formData.birthDay &&
+  //     formData.address &&
+  //     formData.telephone &&
+  //     formData.gender &&
+  //     formData.nationality != ''
+  //   ) {
+  //     console.log("Form submitted:", formData);
+  //   } else {
+  //     alert("Please fill in all required fields.");
+  //   }
+  // };
+
   return (
-    <div className='center'>
+    <Box sx={{
+      flexGrow: 1,
+      maxWidth: 600,
+      mx: 'auto',
+      mt: 5,
+      color: 'Highlight',
+      backgroundColor: 'ActiveBorder',
+      padding: '20px',
+      borderRadius: '20px',
+    }}>
+      <form>
+        <Grid container spacing={2}>
 
-      {/* Header Section */}
-      <div className='header-Style'>
-        <h3> Registration Form 2024</h3>
-      </div>
-      {/* Header Section */}
-
-      {/* Box - 01 */}
-      <Box className='custom-Form-Style'
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '50ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField id="outlined-basic" label="Reg No" variant="outlined" />
-      </Box>
-
-      {/* Box - 02 */}
-      <Box className='custom-Form-Style'
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '50ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField id="outlined-basic" label="First Name" variant="outlined" />
-        <TextField id="outlined-basic" label="Last Name" variant="outlined" />
-      </Box>
-
-      {/* Box - 03 */}
-      <Box className='custom-Form-Style'
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '50ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField id="outlined-basic" label="BirthDay" variant="outlined" />
-      </Box>
-
-      {/* Box - 04 */}
-      <Box className='custom-Form-Style'
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '50ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField id="outlined-basic" label="Address" variant="outlined" />
-      </Box>
-
-      {/* Box - 05 */}
-      <Box className='custom-Form-Style'
-        sx={{'& > :not(style)': { m: 1, width: '50ch' }, }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Age"
-            onChange={handleChange}
+          {/*  Headder */}
+          <Grid item xs={12}
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
           >
-            <MenuItem value={10}>Male</MenuItem>
-            <MenuItem value={20}>Female</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+            <h1 className='header-Style'>Registration Form </h1>
+          </Grid>
 
-    </div>
+          {/* Registration Number  */}
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Registration Number"
+              name="registrationNumber"
+              value={formData.registrationNumber}
+              required
+              onChange={(e) =>
+                setFormData({ ...formData, registrationNumber: e.target.value })
+              }
+            />
+          </Grid>
 
+          {/* Name */}
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Name"
+              name="name"
+              value={formData.name}
+              required
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
+          </Grid>
+
+          {/* Birth Day */}
+          <Grid item xs={12}>
+            <FormLabel id="demo-controlled-radio-buttons-group">Birth Day  </FormLabel>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker />
+            </LocalizationProvider>
+          </Grid>
+
+          {/* Address */}
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Address"
+              name="address"
+              required
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+            />
+          </Grid>
+
+          {/* Telephone */}
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Telephone"
+              name="telephone"
+              value={formData.telephone}
+              required
+              onChange={(e) =>
+                setFormData({ ...formData, telephone: e.target.value })
+              }
+            />
+          </Grid>
+
+          {/* Gender */}
+          <Grid item xs={12}>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              value={top100Films.find(option => option.label === formData.gender) || null}
+              options={top100Films}
+              sx={{ width: 300 }}
+              onChange={(event, newValue) => {
+                setFormData({ ...formData, gender: newValue ? newValue.label : '' });
+              }}
+              renderInput={(params) => <TextField {...params} label="Gender" />}
+            />
+          </Grid>
+
+          {/* Nationality */}
+          <Grid item xs={12}>
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Nationality</FormLabel>
+              <RadioGroup
+                aria-label="nationality"
+                name="nationality"
+                value={formData.nationality}
+                onChange={(event) => {
+                  setFormData({ ...formData, nationality: event.target.value });
+                }}
+                required
+              >
+                <FormControlLabel value="Citizen" control={<Radio />} label="Citizen" />
+                <FormControlLabel value="International" control={<Radio />} label="International" />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+
+
+          {/* Add Button */}
+          <Grid item xs={12}
+            container
+            justifyContent="flex-end">
+            <Button onClick={ckeckFormData} variant="contained"> Add </Button>
+          </Grid>
+
+        </Grid>
+      </form>
+    </Box>
   )
 }
 

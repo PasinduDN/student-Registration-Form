@@ -52,11 +52,11 @@
 
 .custom-Form-Style {
   margin:10px;
-  /* width: auto; */
-  /* height: auto; */
-  /* border: 3px solid rgb(234, 238, 234); */
+  width: auto;
+  height: auto;
+  border: 3px solid rgb(234, 238, 234);
   padding: 10px;
-  text-align: center;
+  justify-content: center;
 
 }
 
